@@ -1,0 +1,20 @@
+// font-face fonts
+
+// supports eot, woff and ttf
+@mixin set-font-face($font-family, $font-path, $font-weight, $font-style, $with-ttf:true)
+    @font-face
+        font-family: $font-family
+        src: url('#{$font-path}.eot')
+        @if $with-ttf
+            src: url('#{$font-path}.eot?#iefix') format('embedded-opentype'), url('#{$font-path}.woff') format('woff'), url('#{$font-path}.ttf') format('truetype')
+        @else
+            src: url('#{$font-path}.eot?#iefix') format('embedded-opentype'), url('#{$font-path}.woff') format('woff')
+        font-weight: $font-weight
+        font-style: $font-style
+
+
+// Benton Modern
+//@import url('https://use.typekit.net/psc7wnj.css')
+
+// Metropolis
+// +set-font-face('Metropolis', '/static/site/fonts/Metropolis/Metropolis-ExtraLight', 200, normal, false)

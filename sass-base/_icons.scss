@@ -1,0 +1,23 @@
+//
+// Icon Font: fontcustom
+//
+
+$icons-file: '/static/site/icons/fontcustom/fontcustom_ab37234f00225459f24e71413cd030b5';
+
+@font-face {
+  font-family: "fontcustom";
+  src: url("#{$icons-file}.eot");
+  src: url("#{$icons-file}.eot?#iefix") format("embedded-opentype"),
+       url("#{$icons-file}.woff") format("woff"),
+       url("#{$icons-file}.ttf") format("truetype"),
+       url("#{$icons-file}.svg#fontcustom") format("svg");
+  font-weight: normal;
+  font-style: normal;
+}
+
+@media screen and (-webkit-min-device-pixel-ratio:0) {
+  @font-face {
+    font-family: "fontcustom";
+    src: url("#{$icons-file}.svg#fontcustom") format("svg");
+  }
+}

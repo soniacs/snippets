@@ -1,0 +1,64 @@
+// TODO
+
+// ----------------------------------------------------
+// TABLES
+
+$tables-border: 1px solid $text-color
+$th-responsive-width: 8em
+
+table
+    width: 100%
+td, th
+    padding: ($gutter/4) ($gutter/2)
+    border-left: 1px solid $text-color
+    border-right: 1px solid $text-color
+    border-top: $tables-border
+    border-bottom: $tables-border
+    vertical-align: middle
+    &:first-child
+        border-left: none
+    &:last-child
+        border-right: none
+
+th,
+td:before
+    font-weight: bold
+td:before
+    margin-bottom: 0
+
++breakpoint(xs-max)
+    thead
+        display: none
+    tr
+        border-top: $tables-border
+        padding: ($gutter/2) 0
+        display: block
+        &:last-child
+            border-bottom: $tables-border
+    th, td
+        border: none
+        padding: 0
+        text-align: left
+        &.align-left,
+        &.align-right,
+        &.align-center
+            text-align: left
+    td
+        +display-flex
+        margin-bottom: ($gutter/4)
+        &:last-child
+            margin-bottom: 0
+        &:before
+            content: attr(data-th)
+            padding-right: $gutter
+            display: inline-block
+            width: $th-responsive-width
+    tfoot
+        tr:first-child
+            border-top: none
+        td, th
+            display: inline-block
+        th
+            width: $th-responsive-width
+        td:before
+            content: none

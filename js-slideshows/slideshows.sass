@@ -1,0 +1,11 @@
+// ----------------------------------------------------
+// SLIDESHOW
+
+.slideshow
+    +transition(opacity 0.5s)
+    opacity: 0
+    &.slick-initialized
+        opacity: 1
+
+.slick-slider, .slick-list, .slick-track, .slick-slide
+    height: 100%

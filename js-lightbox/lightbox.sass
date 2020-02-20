@@ -1,0 +1,251 @@
+$gallery-caption-height: (xs:($gutter*5), sm:($gutter*3))
+
+$lightbox-z: 1000
+$lightbox-overlay: $black
+
+
+// TODO
+
+// ----------------------------------------------------
+// LIGHTBOX
+
+.lightbox
+    position: fixed
+    top: 0
+    bottom: 0
+    left: 0
+    right: 0
+    z-index: $lightbox-z
+    color: $white
+    overflow: hidden
+    //overflow: scroll
+
+#{$cms-toolbar-class} .lightbox
+    top: $cms-toolbar-expanded-height
+
+.lightbox-overlay
+    position: fixed
+    left: 0
+    top: 0
+    right: 0
+    bottom: 0
+    background: $lightbox-overlay
+    z-index: 1
+
+.lightbox-container
+    @extend .container
+    z-index: 5
+
+
+// ----------------------------------------------------
+// LIGHTBOX HEADER
+
+.lightbox-header
+    +make-container
+    +display-flex
+    +align-items(center)
+    height: 100px
+    position: fixed
+    top: 0
+    left: 0
+    right: 0
+    z-index: 1000
+    padding: 0
+
+    .site-title
+        +order(2)
+        color: $white
+
+.close-lightbox
+    +order(1)
+    margin-left: ($gutter/2)
+    background: none
+    border: none
+    color: $white
+    display: block
+    //font-size: 24px
+    font-size: 20px
+    cursor: pointer
+    +breakpoint($nav-breakpoint)
+        margin-left: $gutter
+
+    &:before
+        content: 'X'
+
+
+
+// ----------------------------------------------------
+// LIGHTBOX GALLERY
+
+.js-galleryItem
+    @extend .link-unstyled
+    cursor: pointer
+
+    &[data-video]
+        picture
+            @extend .icon-audio
+            position: relative
+            &:before
+                +transform(translate(-50%,-50%))
+                color: $white
+                font-size: 100px
+                position: absolute
+                top: 50%
+                left: 50%
+        &:hover picture:before
+            content: $font-fontcustom-audioHover
+
+.js-lightboxGallery[data-cols = '1'] .js-galleryItem[data-video]
+    picture:before
+        @extend .icon-audio-md
+        font-size: 150px
+    &:hover picture:before
+        content: $font-fontcustom-audioHover-md
+
+
+.lightbox-gallery
+    display: none
+
+.lightbox-media
+    display: none
+
+.lightbox
+    .slick-list
+        z-index: 1
+        padding: $gutter 0
+        position: relative
+
+    .slick-slider,
+    .lightbox-container, .lightbox-slideshow,
+    .slick-list, .slick-track, .slick-slide
+        height: 100%
+
+    .slick-slide
+        // +display-flex
+        // +align-items(center)
+        // +justify-content(center)
+        // +flex-direction(column)
+        position: relative
+        picture
+            //+flex(1 0 auto)
+            //max-height: 100%
+            +sizes($gallery-caption-height, (top,bottom))
+            width: 100%
+            position: absolute
+        .caption
+            //+flex(0 0 auto)
+            //padding-top: ($gutter/2)
+            // +display-flex
+            // +align-items(flex-end)
+            // +justify-content(center)
+            +sizes($gallery-caption-height, height)
+            +font-size($font-size-15)
+            padding-top: ($gutter)
+            text-align: center
+            width: 100%
+            position: absolute
+            bottom: 0
+        img
+            +transform(translate(-50%,-50%))
+            display: block
+            max-height: 100%
+            margin: 0 auto
+            width: auto
+            position: absolute
+            top: 50%
+            left: 50%
+
+    .slick-arrow
+        // +transition(translateY(-50%))
+        // padding: 0
+        // background: none
+        // border: none
+        color: $white
+        // position: absolute
+        // top: 50%
+        // font-size: 30px
+        // z-index: 1000
+    // .slick-prev
+    //     @extend .icon-arrowLeft
+    //     left: 0
+    // .slick-next
+    //     @extend .icon-arrowRight
+    //     right: 0
+
+
+    .video
+        +transform(translateY(-50%))
+        position: absolute
+        left: ($gutter/2)
+        right: ($gutter/2)
+        top: 50%
+        +proportionalHeight(640,360)
+        +breakpoint(md)
+            margin-left: span(1)
+            margin-right: span(1)
+        +breakpoint(xl)
+            margin-left: span(2)
+            margin-right: span(2)
+
+        iframe
+            position: absolute
+            top: 0
+            left: 0
+            width: 100%
+            height: 100%
+
+
+// ----------------------------------------------------
+// LIGHTBOX PANEL
+
+$lightbox-panel-bg: $gray-light
+
+.js-lightboxPanel
+    display: none
+
+.lightbox-panel
+    color: $text-color
+
+    .lightbox-overlay,
+    .lightbox-header
+        background: $lightbox-panel-bg
+
+    .lightbox-header .site-title
+        color: $text-color
+
+    .lightbox-container
+        padding: ($site-header-height + ($gutter*2)) 0 ($gutter*3)
+
+    .close-lightbox
+        color: $text-color
+
+    .lightbox-content
+        +font-size($font-size-20)
+        font-family: $font-family-serif
+        padding: 0 ($gutter/2)
+        +breakpoint(md)
+            margin-left: span(2)
+            margin-right: span(2)
+
+    h2, h3
+        font-family: $font-family-sans
+
+    h2
+        +font-size($font-size-30)
+        text-align: center
+        margin-bottom: ($gutter*2)
+
+    h3
+        font-weight: bold
+        text-transform: uppercase
+
+
+// ----------------------------------------------------
+// LIGHTBOX IFRAME
+
+.lightbox-iframe .lightbox-container
+    +display-flex
+    +align-items(center)
+    +justify-content(center)
+
+

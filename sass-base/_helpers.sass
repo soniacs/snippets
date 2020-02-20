@@ -1,0 +1,348 @@
+/* SASS MIXINS AND FUNCTIONS */
+
+@mixin input-placeholder
+    &.placeholder
+        @content
+    &:-moz-placeholder
+        @content
+    &::-moz-placeholder
+        @content
+    &:-ms-input-placeholder
+        @content
+    &::-webkit-input-placeholder
+        @content
+
+@mixin position-center($position, $right: 0, $left: 0)
+    position: $position
+    right: $right
+    left: $left
+    margin: 0 auto
+
+@mixin background-cover($position: center)
+    background-repeat: no-repeat
+    background-position: $position
+    background-size: cover
+
+@mixin border-image($border-image)
+    -moz-border-image: $border-image
+    -webkit-border-image: $border-image
+    -o-border-image: $border-image
+    border-image: $border-image
+    border-style: solid
+    border-color: transparent
+
+@function em($pixels, $context: $basesize)
+    @if (unitless($pixels))
+        $pixels: ($pixels * 1px)
+    @if (unitless($context))
+        $context: ($context * 1px)
+    @return (($pixels / $context) * 1em)
+
+@mixin text-cols($cols, $gutter: $gutter)
+    +column-count($cols)
+    +column-gap($gutter)
+
+
+// Slightly lighten a color
+@function tint($color, $percentage)
+    @return mix(white, $color, $percentage)
+
+// Slightly darken a color
+@function shade($color, $percentage)
+    @return mix(black, $color, $percentage)
+
+
+// BORDERS
+// For grid columns with side gutter
+// Position: top, bottom, left, right
+@mixin border($position, $border, $margin: ($gutter/2))
+    content: ''
+    display: block
+    position: absolute
+    @if $position == 'top' or $position == 'bottom'
+        left: $margin
+        right: $margin
+        height: 1px
+        border-top: $border
+        @if $position == 'top'
+            top: 0
+            bottom: auto
+        @else
+            top: auto
+            bottom: 0
+    @if $position == 'left' or $position == 'right'
+        top: 0
+        bottom: 0
+        width: 1px
+        border-left: $border
+        @if $position == 'left'
+            left: $margin
+            right: auto
+        @else
+            left: auto
+            right: $margin
+
+
+// MEDIA QUERIES
+// Breakpoints: xs, sm, md, lg, xl
+// Max Breakpoints: xs-max, sm-max, md-max, lg-max
+@mixin breakpoint($point)
+    @if $point == 'xs'
+        @media (max-width: $screen-sm - 1)
+            @content
+    @else if $point == 'sm'
+        @media (min-width: $screen-sm)
+            @content
+    @else if $point == 'md'
+        @media (min-width: $screen-md)
+            @content
+    @else if $point == 'lg'
+        @media (min-width: $screen-lg)
+            @content
+    @else if $point == 'xl'
+        @media (min-width: $screen-xl)
+            @content
+    @else if $point == 'xs-max'
+        @media (max-width: $screen-xs-max)
+            @content
+    @else if $point == 'sm-max'
+        @media (max-width: $screen-sm-max)
+            @content
+    @else if $point == 'md-max'
+        @media (max-width: $screen-md-max)
+            @content
+    @else if $point == 'lg-max'
+        @media (max-width: $screen-lg-max)
+            @content
+    @else
+        @media (min-width: $point)
+            @content
+@mixin retina()
+    @media (-webkit-min-device-pixel-ratio: 2), (min-resolution: 192dpi)
+        @content
+
+
+// TRIANGLES
+// directions: bottom, top, left, right
+@mixin triangle($direction, $color, $width, $height)
+    content: ""
+    display: inline-block
+    zoom: 1
+    width: 0
+    height: 0
+
+    @if $direction == bottom or $direction == top
+        border-right: $width solid transparent
+        border-left: $width solid transparent
+        @if $direction == bottom
+            border-top: $height solid $color
+            border-bottom: none
+        @else
+            border-bottom: $height solid $color
+            border-top: none
+    @else if $direction == left or $direction == right
+        border-top: $height solid transparent
+        border-bottom: $height solid transparent
+        @if $direction == left
+            border-right: $width solid $color
+            border-left: none
+        @else
+            border-left: $width solid $color
+            border-right: none
+
+
+// NAVBAR BUTTON
+@mixin navbar-btn($color, $width, $linesHeight, $linesGutter, $display: block)
+    position: relative
+    display: $display
+    height: ($linesHeight * 3) + ($linesGutter * 2)
+    width: $width
+    &:before,
+    &:after
+        content: ''
+        display: block
+        width: $width
+        border-top: $linesHeight solid $color
+        position: absolute
+        left: 0
+    &:before
+        height: (($linesHeight * 2) + ($linesGutter))
+        border-bottom: $linesHeight solid $color
+        top: 0
+    &:after
+        bottom: 0
+
+@mixin navbar-btn-close($linesHeight, $linesGutter)
+    &:before
+        +transform(rotate(45deg))
+        top: ($linesHeight + $linesGutter)
+        height: $linesHeight
+        border-bottom: none
+    &:after
+        +transform(rotate(-45deg))
+        bottom: ($linesHeight + $linesGutter)
+
+
+// GRID
+@function span($cols, $grid-columns: $grid-columns)
+    @return ((100%/$grid-columns) * $cols)
+
+@mixin span($cols, $grid-columns: $grid-columns, $float: true)
+    @if $float
+        float: left
+    padding-left: ($gutter/2)
+    padding-right: ($gutter/2)
+    width: span($cols, $grid-columns)
+
+@mixin row()
+    +pie-clearfix
+    margin-left: -($gutter/2)
+    margin-right: -($gutter/2)
+
+// Use with care
+// Doesn't work on xs and fluid containers
+@function span-fixed($cols, $container)
+    @return (($container/$grid-columns) * $cols)
+
+
+// RESPONSIVE SIZES
+// Allows to set multiple responsive sizes in a map
+// Just set a map and a property
+// $property accepts sass lists
+
+@mixin set-by-breakpoint($point)
+    @if $point == xs
+        @content
+    @else
+        +breakpoint($point)
+            @content
+
+// Mixins helpers
+// Allows for $property sass lists
+@mixin set-sizes($size, $property)
+    @if length($property)
+        @each $item in $property
+            #{$item}: $size
+    @else
+        #{$property}: $size
+@mixin set-spans($cols, $property)
+    @if length($property)
+        @each $item in $property
+            #{$item}: span($cols)
+    @else
+        #{$property}: span($cols)
+
+// Must have variables such as 
+// $sizes: (xs:100px, md:200px)
+@mixin sizes($sizes, $property)
+    @each $point,$size in $sizes
+        +set-by-breakpoint($point)
+            +set-sizes($size, $property)
+
+// Sizes with grid span functions
+// Must have variables such as 
+// $spans: (xs:4, md:5)
+@mixin sizes-span($spans, $property)
+    @each $point,$cols in $spans
+        +set-by-breakpoint($point)
+            +set-spans($cols, $property)
+
+
+// FONT SIZES
+// For responsive it must have variables such as 
+// $font-size: (
+//      xs: (_FONT-SIZE_, _LINE-HEIGHT_),
+//      md: (_FONT-SIZE_, _LINE-HEIGHT_) );
+// If not responsive, just use
+// $font-size: (_FONT-SIZE_, _LINE-HEIGHT_);
+// It can have font-size and line-weight or just font-size
+// $font-size: _FONT-SIZE_;
+
+@mixin set-font-size($size)
+    @if type-of($size) == list
+        font-size: nth($size, 1)
+        line-height: nth($size, 2)
+    @else if $size
+        font-size: $size
+
+@mixin font-size($font-size)
+    @if type-of($font-size) == map
+        @each $point,$size in $font-size
+            +set-by-breakpoint($point)
+                +set-font-size($size)
+    @else if $font-size
+        +set-font-size($font-size)
+
+
+// STYLES MIXIN
+// Allows to set maps with different styles for an element,
+// useful to have more versatile and complex settings.
+// Must use maps with variables such as
+// $styles: (
+//     '_PROPERTY_': _VALUE_,
+// );
+// It supports responsive font-sizes
+
+@mixin styles($styles)
+    @if $styles
+        @each $property,$value in $styles
+            @if $property == font-size
+                +font-size($value)
+            @else
+                #{$property}: $value
+
+
+// PROPORTIONAL HEIGHT
+// pass a ratio, example (3,2)
+@mixin proportionalHeight($ratioX, $ratioY, $location: before)
+    &:#{$location}
+        display: block
+        content: ""
+        height: 0
+        width: 100%
+        padding-top: ((100% * $ratioY)/$ratioX)
+@mixin updateProportionalHeight($ratioX, $ratioY, $location: before)
+    &:#{$location}
+        padding-top: ((100% * $ratioY)/$ratioX)
+
+
+// GRID DISPLAY
+// https://gist.github.com/jpblancoder/5e10509bd65da13ad5130bf96c474e6b
+@mixin display-grid
+    display: -ms-grid
+    display: grid
+// $columns values should be delimited by a space
+@mixin grid-template-columns($columns...)
+    -ms-grid-columns: $columns
+    grid-template-columns: $columns
+// $rows values should be delimited by a space
+@mixin grid-template-rows($rows...)
+    -ms-grid-rows: $rows
+    grid-template-rows: $rows
+// Can be used in combination with above grid-template-X mixins.
+// These result in the same output:
+// @include grid-template-columns(10px grid-repeat(4, 20px) 30px);
+// @include grid-template-columns(10px 20px 20px 20px 20px 30px);
+@function grid-repeat($repeat, $stuff: 1fr)
+    $list: ()
+    @for $i from 1 through $repeat
+        $list: append($list, $stuff, space)
+    @return $list
+@mixin grid-column($col-start, $col-end)
+    -ms-grid-column: $col-start
+    -ms-grid-column-span: $col-end - $col-start
+    grid-column: #{$col-start} / #{$col-end}
+@mixin grid-row($row-start, $row-end)
+    -ms-grid-row: $row-start
+    -ms-grid-row-span: $row-end - $row-start
+    grid-row: #{$row-start} / #{$row-end}
+@mixin grid-align-self($value)
+    -ms-grid-row-align: $value
+    align-self: $value
+@mixin grid-justify-self($value)
+    -ms-grid-column-align: $value
+    justify-self: $value
+
+
+
+// PROJECT SPECIFIC

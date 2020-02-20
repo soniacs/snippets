@@ -1,0 +1,146 @@
+/* UTILITIES
+ * Useful classes
+ * -------------------------
+ * Tipography
+ * Floats
+ * Displays
+ * Grid
+ * Responsive
+ */
+
+
+// ----------------------------------------------------
+// TIPOGRAPHY
+
+.align-left
+    text-align: left
+.align-right
+    text-align: right
+.align-center
+    text-align: center
+
+
+// ----------------------------------------------------
+// FLOATS
+
+.clearfix
+    +pie-clearfix
+.center-block
+    display: block
+    margin-left: auto
+    margin-right: auto
+.pull-right
+    float: right
+.pull-left
+    float: left
+
+
+// ----------------------------------------------------
+// DISPLAYS
+
+.hidden
+    display: none
+.visible
+    display: block
+
+
+// ----------------------------------------------------
+// GRID
+
+.row
+    +row
+
+
+// ----------------------------------------------------
+// RESPONSIVE
+
+@mixin responsive-visibility($parent)
+    #{$parent}
+        display: block
+    table#{$parent}
+        display: table
+    tr#{$parent}
+        display: table-row
+    th#{$parent},
+    td#{$parent}
+        display: table-cell
+
+@mixin responsive-invisibility($parent)
+    #{$parent}
+        display: none
+
++responsive-invisibility('.visible-xs')
++responsive-invisibility('.visible-sm')
++responsive-invisibility('.visible-md')
++responsive-invisibility('.visible-lg')
+
+.visible-xs-block,
+.visible-xs-inline,
+.visible-xs-inline-block,
+.visible-sm-block,
+.visible-sm-inline,
+.visible-sm-inline-block,
+.visible-md-block,
+.visible-md-inline,
+.visible-md-inline-block,
+.visible-lg-block,
+.visible-lg-inline,
+.visible-lg-inline-block
+    display: none
+
+@media (max-width: $screen-xs-max)
+    +responsive-visibility('.visible-xs')
+.visible-xs-block
+    +breakpoint(xs-max)
+        display: block
+.visible-xs-inline
+    +breakpoint(xs-max)
+        display: inline
+.visible-xs-inline-block
+    +breakpoint(xs-max)
+        display: inline-block
+
+@media (min-width: $screen-sm) and (max-width: $screen-sm-max)
+    +responsive-visibility('.visible-sm')
+.visible-sm-block
+    @media (min-width: $screen-sm) and (max-width: $screen-sm-max)
+        display: block
+.visible-sm-inline
+    @media (min-width: $screen-sm) and (max-width: $screen-sm-max)
+        display: inline
+.visible-sm-inline-block
+    @media (min-width: $screen-sm) and (max-width: $screen-sm-max)
+        display: inline-block
+
+@media (min-width: $screen-md) and (max-width: $screen-md-max)
+    +responsive-visibility('.visible-md')
+.visible-md-block
+    @media (min-width: $screen-md) and (max-width: $screen-md-max)
+        display: block
+.visible-md-inline
+    @media (min-width: $screen-md) and (max-width: $screen-md-max)
+        display: inline
+.visible-md-inline-block
+    @media (min-width: $screen-md) and (max-width: $screen-md-max)
+        display: inline-block
+
+@media (min-width: $screen-lg)
+    +responsive-visibility('.visible-lg')
+.visible-lg-block
+    @media (min-width: $screen-lg)
+        display: block
+.visible-lg-inline
+    @media (min-width: $screen-lg)
+        display: inline
+.visible-lg-inline-block
+    @media (min-width: $screen-lg)
+        display: inline-block
+
+@media (max-width: $screen-xs-max)
+    +responsive-invisibility('.hidden-xs')
+@media (min-width: $screen-sm) and (max-width: $screen-sm-max)
+    +responsive-invisibility('.hidden-sm')
+@media (min-width: $screen-md) and (max-width: $screen-md-max)
+    +responsive-invisibility('.hidden-md')
+@media (min-width: $screen-lg)
+    +responsive-invisibility('.hidden-lg')

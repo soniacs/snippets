@@ -1,0 +1,39 @@
+// ----------------------------------------------------
+// SITE HEADER
+
+.site-header
+    position: fixed
+    top: 0
+    left: 0
+    right: 0
+    z-index: $site-header-z
+
+    > .container
+        +sizes($site-header-height, height)
+        +display-flex
+        +align-items(center)
+
+
+// CMS Toolbar offsets
+#{$cms-toolbar-class}
+    .site-header
+        margin-top: $cms-toolbar-expanded-height
+    .site-nav
+        +breakpoint($nav-breakpoint-max)
+            margin-top: $cms-toolbar-expanded-height
+
+
+// ----------------------------------------------------
+// SITE BRAND
+
+.site-brand
+    +flex(0 0 auto)
+
+    a
+        @extend .link-unstyled
+        display: block
+
+    img
+        +sizes($site-brand-height, height)
+        display: block
+        width: auto

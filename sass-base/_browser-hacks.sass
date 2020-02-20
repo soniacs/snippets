@@ -1,0 +1,32 @@
+// ----------------------------------------------------
+// SAFARI
+// https://stackoverflow.com/questions/16348489/is-there-a-css-hack-for-safari-only-not-chrome
+
+@mixin safari()
+
+    /* Safari 9+ */
+    @supports (-webkit-marquee-repetition:infinite) and (object-fit:fill)
+        @content
+
+    /* Safari 10.1 */
+    @media not all and (min-resolution:.001dpcm)
+        @supports (-webkit-appearance:none) and (not (stroke-color:transparent))
+            @content
+
+    /* Safari 11+ */
+    @media not all and (min-resolution:.001dpcm)
+        @supports (-webkit-appearance:none) and (stroke-color:transparent)
+            @content
+
+
+//+safari
+
+
+// ----------------------------------------------------
+// IE 11
+
+@mixin ie11($selector)
+    *::-ms-backdrop, #{$selector}
+        @content
+
+//+ie11('div')

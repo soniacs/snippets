@@ -1,0 +1,112 @@
+// COLORS
+$black:                  #000000;
+$white:                  #FFFFFF;
+
+$accent-color:           blue;
+$error-color:            red;
+
+
+
+// SCAFFOLDING
+$body-bg:                $white;
+$text-color:             $black;
+
+$link-color:             $accent-color;
+$link-hover-color:       $text-color;
+$link-decoration:        underline;
+$link-hover-decoration:  underline;
+$link-transition:        all 0.5s;
+
+$hr-height:              1px;
+$hr-border:              $hr-height solid $accent-color;
+
+
+// TYPOGRAPHY
+$basesize:                16px; //base to calculate em sizes
+$baseline:                20px;
+
+$font-size-default:       (16px,20px);
+$font-size-sm:            none;
+$font-size-h1:            none;
+$font-size-h2:            none;
+$font-size-h3:            none;
+$font-size-h4:            none;
+$font-size-h5:            none;
+$font-size-h6:            none;
+
+
+$font-family-default:     sans-serif;
+$font-family-display:     sans-serif;
+$font-family-headings:    $font-family-display;
+
+$font-antialiased:        true;
+
+
+// BORDERS
+
+
+// GRID SYSTEM
+$grid-columns:              12;
+$gutter:                    20px;
+
+
+// CONTAINER SIZES
+$container-width: (
+    sm:(720px + $gutter),
+    md:(940px + $gutter),
+    lg:(1140px + $gutter),
+    xl:(1760px + $gutter),
+);
+$container-fixed-breakpoint:     'sm';
+$container-fixed-breakpoint-max: 'xs-max';
+
+
+// must have at least same breakpoints as $container-size
+$container-margins: (
+    xs:($gutter),
+    sm:($gutter),
+    md:($gutter),
+    lg:($gutter),
+    xl:($gutter)
+);
+
+
+// MEDIA QUERIES BREAKPOINTS
+$screen-xs:                  480px;
+$screen-sm:                  768px;
+$screen-md:                  992px;
+$screen-lg:                  1200px;
+$screen-xl:                  1920px;
+
+$screen-xs-max:              ($screen-sm - 1);
+$screen-sm-max:              ($screen-md - 1);
+$screen-md-max:              ($screen-lg - 1);
+$screen-lg-max:              ($screen-xl - 1);
+
+
+// Z-INDEX
+$site-header-z:              150;
+$site-footer-z:              60;
+$site-main-z:                30;
+$page-header-z:              120;
+$scroll-over-z:              90;
+
+// LAYOUT
+$sticky-footer:              true;
+$screen-height-fallback:     600px;
+//$site-main-spans:            4;
+
+
+// CMS
+$cms-toolbar-class:           '.cms-toolbar-expanded';
+$cms-toolbar-expanded-height: 46px;
+
+
+// HEADER
+$site-header-height:         (xs: 57px);
+$site-brand-height:          (xs: 27px);
+
+$nav-breakpoint:             'md';
+$nav-breakpoint-max:         'sm-max';
+
+

@@ -1,0 +1,230 @@
+/* GLOBAL
+ * Main Styles
+ * -------------------------
+ * - Base
+ * - Typography
+ * - Lists
+ * - Tables
+ * - Buttons
+ * - Layout
+ */
+
+
+// ----------------------------------------------------
+// BASE
+
+*, *:before, *:after
+    +box-sizing(border-box)
+
+section, article, aside, header, footer, nav, main, figure, figcaption, code, picture
+    display: block
+
+h1, h2, h3, h4, h5, h6, p, ul, ol, dl
+    margin: 0 0 $baseline
+
+img
+    max-width: 100%
+    height: auto
+
+
+// ----------------------------------------------------
+// LINKS
+
+a:focus, input:focus, textarea:focus, button:focus, .slick-slide:focus
+    outline: none
+
+a, button, .btn
+    +transition($link-transition)
+
+a
+    -webkit-tap-highlight-color: transparent //ios fix
+    color: $link-color
+    text-decoration: $link-decoration
+    &:hover
+        color: $link-hover-color
+        text-decoration: $link-hover-decoration
+.link-unstyled
+    color: inherit
+    text-decoration: none
+    &:hover
+        color: inherit
+        text-decoration: none
+
+
+// ----------------------------------------------------
+// TYPOGRAPHY
+
+body
+    +font-size($font-size-default)
+    background: $body-bg
+    color: $text-color
+    font-family: $font-family-default
+    @if $font-antialiased
+        -webkit-font-smoothing: antialiased
+        -moz-osx-font-smoothing: grayscale
+
+em, i
+    font-style: italic
+strong, b
+    font-weight: bold
+strong em, em strong, b i, i b
+    font-style: italic
+    font-weight: bold
+u
+    text-decoration: underline
+
+h1, h2, h3, h4, h5, h6
+    font-family: $font-family-headings
+
+h1
+    +font-size($font-size-h1)
+h2
+    +font-size($font-size-h2)
+h3
+    +font-size($font-size-h3)
+h4
+    +font-size($font-size-h4)
+h5
+    +font-size($font-size-h5)
+h6
+    +font-size($font-size-h6)
+
+small
+    +font-size($font-size-sm)
+
+.subtitle
+    display: block
+
+hr
+    margin: $baseline 0
+    display: block
+    height: $hr-height
+    border: 0
+    border-top: $hr-border
+
+
+// ----------------------------------------------------
+// LISTS
+
+ul, ol
+    padding-left: 1.1em
+    list-style-position: inside
+
+ul
+    list-style-type: disc
+    padding-left: 0
+ol
+    list-style-type: decimal
+    padding-left: 0
+
+.list-unstyled
+    list-style: none
+    padding-left: 0
+    margin-bottom: 0
+
+
+// ----------------------------------------------------
+// BUTTONS
+
+input[type="submit"], button, .btn
+    @extend .link-unstyled
+    -webkit-appearance: none
+    display: inline-block
+    cursor: pointer
+    line-height: 1
+    text-align: center
+    border-radius: 0
+    background: $accent-color
+    border:  none
+    color: $white
+    padding: 10px 40px 8px
+
+    &:hover
+        opacity: 0.5
+
+
+// ----------------------------------------------------
+// LAYOUT
+
+@mixin set-container-margins($property, $reduce:0)
+    @each $point,$margin in $container-margins
+        +set-by-breakpoint($point)
+            #{$property}-left: ($margin - $reduce)
+            #{$property}-right: ($margin - $reduce)
+
+@mixin make-container($padding:true)
+    @extend .clearfix
+    width: auto
+    +sizes($container-width, width)
+    position: relative
+    @if $padding
+        padding-right: ($gutter/2)
+        padding-left: ($gutter/2)
+    +set-container-margins(margin, ($gutter/2))
+    @if $container-fixed-breakpoint
+        +breakpoint($container-fixed-breakpoint)
+            margin-left: auto
+            margin-right: auto
+
+@mixin clear-container()
+    width: auto
+    padding-left: 0
+    padding-right: 0
+    margin-left: 0
+    margin-right: 0
+
+.container
+    +make-container
+
+.container-row
+    +make-container(false)
+
+
+// Containers with viewport height
+// gets fixed with jQuery
+.screen-height
+    height: $screen-height-fallback
+    min-height: $screen-height-fallback
+
+.simple-parallax
+    background-attachment: fixed
+
+.site-main
+    @extend .clearfix
+    position: relative
+    z-index: $site-main-z
+    overflow: hidden
+
+// Sticky footer
+@if $sticky-footer
+    body
+        +display-flex
+        +flex-direction(column)
+        min-height: $screen-height-fallback
+        min-height: 100vh
+
+    .site-header,
+    .site-footer
+        +flex(none)
+
+    .site-main
+        +flex(1 0 auto)
+        position: relative
+        &:after
+            content: '\00a0'
+            display: block
+            margin-top: var(--space)
+            height: 0px
+            visibility: hidden
+
+// Html noscroll
+html.noscroll
+    position: fixed
+    overflow-y: scroll
+    width: 100%
+
+
+
+
+
+

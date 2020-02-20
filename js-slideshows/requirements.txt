@@ -1,0 +1,2 @@
+jquery
+slick slider - https://kenwheeler.github.io/slick/
